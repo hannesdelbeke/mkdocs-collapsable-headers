@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+.collapsible {
+  // background-color: #777;
+  color: white;
+  cursor: pointer;
+  padding: 18px;
+  width: 100%;
+  border: none;
+  text-align: left;
+  outline: none;
+  font-size: 15px;
+}
+
+
+.active, .collapsible:hover {
+  // background-color: #555;
+}
+
+.active, .h1:hover {
+   background-color: #555;
+   color: red;
+}
+
+.content {
+  padding: 0 18px;
+  display: none;
+  overflow: hidden;
+ // background-color: #f1f1f1;
+}
+
+</style>
+</head>
+<body>
+
+
+<article>
+<header>
+<h1>HEAD1</h1><div class_="collapsible">
+<p>Posted by John Doe</p>
+<p>Some additional information here</p>
+<h2>HEAD2</h2><div class_="collapsible">
+<p>Posted by John Doe</p>
+<p>Some additional information here</p>
+</div></div>
+
+    <h1>HEAD1B</h1><div class_="collapsible">
+
+</div></header>
+<p>Lorem Ipsum dolor set amet....</p>
+</article>
+
+<script>
+function echo( ...s ) // rest operator
+ {
+   for(var i = 0; i < s.length; i++ ) {
+
+    document.write(s[i] + ' '); // quotes for space
+
+   }
+
+ }
+
+const header_names = ["h1","h2","h3","h4","h5","h6"]
+
+var j;
+for (j = 0; j < header_names.length; j++) {
+  let coll = document.getElementsByTagName(header_names[j]);
+
+  let i;
+  // for every header
+  for (i = 0; i < coll.length; i++) {
+
+    // on click we run function:
+    coll[i].addEventListener("click", function() {
+
+      // toggle active state WORKS
+      let active = this.classList.toggle("active");
+
+
+      // this might break if other plugins change HTML,
+      // currently assumes next element is the collapsible div
+      let div = this.nextElementSibling;
+      toggleActive(div, active);
+    });
+  }
+}
+
+function toggleActive(element, active) {
+    if (active) {
+      element.style.display = "none";
+    } else {
+      element.style.display = "block";
+    }
+}
+
+</script>
+
+</body>
+</html>
