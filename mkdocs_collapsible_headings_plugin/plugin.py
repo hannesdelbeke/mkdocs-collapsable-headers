@@ -3,13 +3,13 @@ import sys
 from timeit import default_timer as timer
 from datetime import datetime, timedelta
 
-# from mkdocs import utils as mkdocs_utils
-# from mkdocs.config import config_options, Config
-# from mkdocs.plugins import BasePlugin
+from mkdocs import utils as mkdocs_utils
+from mkdocs.config import config_options, Config
+from mkdocs.plugins import BasePlugin
 
-from unittest.mock import MagicMock
-BasePlugin = MagicMock()
-config_options = MagicMock()
+# from unittest.mock import MagicMock
+# BasePlugin = MagicMock()
+# config_options = MagicMock()
 
 import itertools
 from bs4 import BeautifulSoup
@@ -25,18 +25,19 @@ def wrap(soup, heading_name):
                   lambda x: x.name not in [element.name, 'script'],
                   element.next_siblings)]
 
-        # all classes start with md-ch- to avoid conflicts with other plugins
+        # all classes start with md- to avoid conflicts with other plugins
         # md : makedocs
-        # ch : collapsible headings
+        tag_toggle = soup.new_tag('input type="checkbox"', class_='md-nav__toggle md-toggle')
+        # tag_toggle_icon = soup.new_tag('span', class_='md-nav__icon md-icon')
+        tag_div = soup.new_tag('tr', class_='md-heading__content')
 
-        new_tag_toggle = soup.new_tag('input type="checkbox"', class_='md-ch-heading-toggle')
-        new_tag_div = soup.new_tag('div', class_='md-ch-heading-content')
-
-        element.insert_before(new_tag_toggle)
-        element.insert_after(new_tag_div)
+        # element.insert(0, tag_toggle)
+        # element.insert_before(tag_toggle)
+        element.append(tag_toggle)
+        element.insert_after(tag_div)
 
         for tag in els:
-            new_tag_div.append(tag)
+            tag_div.append(tag)
 
     return soup
 
